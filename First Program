@@ -1,0 +1,78 @@
+package com.tca;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
+
+public class AddStudent {
+
+	public static void main(String[] args) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+		
+		try {
+			//Step 1 - load the driver class...
+			Class.forName("org.postgresql.Driver");
+			
+			//Step 2 - Form the connection...
+			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ajb22","root","root@123");
+			
+			
+			//sTEP 3 - PREPARE SQL...
+			ps = con.prepareStatement("INSERT INTO student VALUES(?, ?, ?)");
+			
+		       System.out.println("Enter the Roll no : ");
+		       int r = Integer.parseInt(br.readLine());
+		       
+		       System.out.println("Enter the Name : ");
+		       String nm=br.readLine();
+		       
+		       System.out.println("Enter the Percentage : ");
+		       double p = Double.parseDouble(br.readLine());
+			
+			
+			//accept the values from user....
+			ps.setInt(1,r);
+			ps.setString(2, nm);
+			ps.setDouble(3,p);
+			
+			// Step 4 - to execute Query...
+			ps.executeUpdate();
+			
+			//Step 5 - Process the Response....
+			System.out.println("Record saved successfully...");
+			
+		}
+		
+		catch( Exception e) {
+			System.out.println("Problem while saving record....");
+			e.printStackTrace();
+		}
+		
+		
+		finally {
+			try {
+				// Step 6 - Close the Connection...
+				if (ps != null) {
+                    ps.close();
+                }
+
+                if (con != null) {
+                    con.close();
+                }
+			}
+			catch(SQLException sq) {
+				sq.printStackTrace();
+			}
+		}
+
+	}
+
+}
