@@ -1,0 +1,66 @@
+package com.tca;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
+public class DeleteStudent {
+
+	public static void main(String[] args) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		BufferedReader br= new BufferedReader (new InputStreamReader(System.in));
+		
+		try {
+			Class.forName("org.postgresql.Driver"); 
+			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ajb22","root","root@123");
+			
+			
+			System.out.println("Enter the Roll no to delete the record...: ");
+			int rn= Integer.parseInt(br.readLine());
+			
+			
+			ps = con.prepareStatement("DELETE FROM student WHERE rno= ?");
+			ps.setInt(1, rn);
+			
+			int rval = ps.executeUpdate();
+			
+			if(rval==0) {
+				
+				System.out.println("No Record found...");
+			}
+			else {
+				System.out.println("Record Deleted successfully....");
+			}
+			
+		}
+		catch(Exception e) {
+			
+			System.out.println("Problem while Deleting the record...");
+		}
+		
+		finally {
+			try {
+				
+				if(con!=null) {
+					con.close();
+				}
+				if(ps!=null) {
+					ps.close();
+				}
+				
+			}
+			
+			catch(SQLException sq) {
+				System.out.println("problem while closing connections...");
+			}
+		}
+
+	}
+
+}
