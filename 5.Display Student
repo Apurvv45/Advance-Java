@@ -1,0 +1,60 @@
+package com.tca;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class DisplayStudent {
+
+	public static void main(String[] args) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null; // to hold response of query..
+		
+		// configuration Details...
+		final String db_driver="org.postgresql.Driver";
+		final String db_url="jdbc:postgresql://localhost:5432/ajb22";
+		final String db_user="root";
+		final String db_password="root@123";
+		
+		try {
+			Class.forName(db_driver);
+			
+			con=DriverManager.getConnection(db_url,db_user,db_password);
+			
+			
+			ps=con.prepareStatement("SELECT * FROM student");
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("Roll no :"+rs.getInt("rno"));
+				System.out.println("Name : "+rs.getString("name"));
+				System.out.println("Percentage : "+rs.getDouble("per"));
+				System.out.println("------------------------------------");
+			}
+			
+		}
+		catch(Exception e) {
+			
+			System.out.println("Error while executing the Qerry..");
+		}
+		finally {
+			try {
+				if(con!=null) {
+					con.close();
+				}
+				if (ps!=null) {
+					ps.close();
+				 }
+				}
+			catch(Exception e) {
+				System.out.println("Error while closing the connection..");
+			}
+		}
+		
+		
+
+	}
+
+}
