@@ -1,0 +1,16 @@
+package com.tca;
+
+public class BasicMulti {
+
+	public static void main(String[] args) {
+		System.out.println("Basic Multi Threading program...");
+		
+		Thread t = Thread.currentThread();
+		
+		System.out.println("Name of the Thread : "+ t.getName());
+		System.out.println("Priority of the Thread : "+t.getPriority());
+		System.out.println("Group of Thread : "+t.getThreadGroup());
+		
+	}
+
+}
