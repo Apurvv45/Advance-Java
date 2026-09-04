@@ -1,0 +1,41 @@
+package com.tca;
+
+
+class Ithread implements Runnable{
+	
+	public void run() {
+		try {
+			for(int i=0;i<5;i++) {
+				System.out.println("INDIA");
+				Thread.sleep(1000);
+			}
+		}
+		
+		catch(InterruptedException ie) {
+			System.out.println("Problem while running program...");
+		}
+	}
+}
+
+public class Demo {
+	
+	public static void main(String[] args) {
+		
+		Thread t1 = new Thread(new Ithread());
+		t1.start();
+		
+		
+		try {
+			for(int i=0;i<5;i++) {
+				System.out.println("Main");
+				Thread.sleep(1000);
+			}
+		}
+		catch(InterruptedException ie) {
+			ie.printStackTrace();
+		}
+
+	 }
+	}
+
+
