@@ -1,0 +1,41 @@
+package com.tca;
+
+class Resource{
+	int cnt;
+	public synchronized void increment() {
+		cnt = cnt + 1;
+	}
+}
+
+class Ithread extends Thread{
+	
+	Resource r;
+	
+	Ithread(Resource r){
+		this.r=r;
+		
+	}
+	public void run() {
+		for(int i=1; i<5000 ; i++) {
+			r.increment();
+		}
+	}
+}
+
+public class demo {
+   public static void main(String [] args) throws Exception{
+	   Resource r = new Resource ();
+	   
+	   Ithread t1 =new Ithread(r);
+	   Ithread t2 =new Ithread(r);
+	   
+	   t1.start();
+	   t2.start();
+	   
+	   t1.join();//means main will wait for t1 to complete task...
+	   
+	   t2.join();//means main will wait for t2 to complete task...
+	   
+	   System.out.println("resource r:"+r.cnt);
+   }
+}
