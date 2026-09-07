@@ -1,0 +1,51 @@
+package com.tca;
+
+import java.util.Arrays;
+import java.util.Random;
+
+class SumThread extends Thread{
+	
+	int a[];
+	int start;
+	int end;
+	int sum;
+	
+	public SumThread(int a[],int start, int end) {
+		this.a=a;
+		this.start=start;
+		this.end=end;
+		this.sum=0;
+	} 
+	public synchronized void run() {
+		for(int i=start;i<end;i++) {
+			sum=sum+a[i];
+		}
+	}
+}
+
+public class demo {
+	
+	public static void main(String[] args) throws Exception {
+		Random r =new Random();
+		int n=40;
+		int a[] = new int[n];
+		for(int i=0;i<n;i++) {
+			a[i]=r.nextInt(1000);
+			
+		}
+		System.out.println(Arrays.toString(a));
+		
+		SumThread t1=new SumThread(a,0,19);
+		SumThread t2=new SumThread (a,20,39);
+		
+		t1.start();
+		t2.start();
+		
+		t1.join();
+		t2.join();
+		
+		int total = t1.sum+t2.sum;
+		System.out.println("Sum of n numbers : "+total);
+	}
+
+}
