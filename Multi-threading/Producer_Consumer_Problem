@@ -1,0 +1,89 @@
+package com.tca;
+
+import java.util.LinkedList;
+
+class Resource{
+	LinkedList<Integer>buffer=new LinkedList<>();
+	int capacity=3;
+	int value=0;
+	
+	public void produce() throws Exception {
+		while(true) {
+			synchronized (this) {
+				while(buffer.size()==capacity) {
+					wait();
+				}
+				buffer.add(value);
+				System.out.println("Producer Produced : "+value);
+				value++;
+				notify();
+			}
+			
+		}
+	}
+	
+	public void consume() throws Exception{
+		while(true) {
+			synchronized (this) {
+				while(buffer.size()==0) {
+					wait();
+				}
+				int consumed=buffer.removeFirst();
+				System.out.println("Consumer consumed : "+consumed);
+				notify();
+				Thread.sleep(1000);
+			}
+		}
+	}
+	
+}
+
+class ProducerThread extends Thread{
+	Resource r;
+	
+	ProducerThread(Resource r){
+		this.r=r;
+	}
+	
+	public void run() {
+		try {
+			r.produce();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class ConsumerThread extends Thread{
+	Resource r;
+	
+	ConsumerThread(Resource r){
+		this.r=r;
+	}
+	
+	public void run() {
+		try {
+			r.consume();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+public class Demo {
+
+	public static void main(String[] args) {
+		Resource r=new Resource();
+		
+		ProducerThread t1=new ProducerThread(r);
+		ConsumerThread t2=new ConsumerThread(r);
+		
+		t1.start();
+		t2.start();
+
+	}
+
+}
