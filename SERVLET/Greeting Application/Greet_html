@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form method="POST" action="./User">
+    Enter the User name : <input type="Text" name="un" required><br>
+    <input type="submit" value="send">
+
+</form>
+
+
+</body>
+</html>
