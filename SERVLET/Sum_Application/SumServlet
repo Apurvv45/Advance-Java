@@ -1,0 +1,42 @@
+package com.tca;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/sum")
+public class SumServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+   
+    public SumServlet() {
+        super();
+       
+    }
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		
+		int x =Integer.parseInt (request.getParameter("f"));
+		int y =Integer.parseInt(request.getParameter("s"));
+		
+		
+		int z=x+y;
+		
+		out.println("Sum is :"+z);
+		
+		out.close();
+	}
+
+	
+	
+}
