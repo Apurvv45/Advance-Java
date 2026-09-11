@@ -1,0 +1,43 @@
+package com.tca;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet({ "/Login", "/login" })
+public class Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+   
+    public Login() {
+        super();
+        
+    }
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setContentType("text/html");
+		
+		PrintWriter out= response.getWriter();
+		
+		String username=request.getParameter("un");
+		String pawd=request.getParameter("pwd");
+		
+		
+		if(username.equals("sachin") && pawd.equals("tca")) {
+			out.println("<h1>Login Successful</h1>");
+		}
+		else {
+			out.println("<h1>Login Failed</h1>");
+		}
+		
+		out.close();
+		
+	}
+
+}
