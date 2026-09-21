@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form method="POST" action="./page2">
+<h1>Select The Books To purchase..</h1>
+<input type="checkbox"  name="Lbook" value="150">C programming rs.150 <br>
+<input type="checkbox"  name="Lbook" value="250">Python programming rs.250 <br>
+<input type="checkbox"  name="Lbook" value="350">Java programming rs.350 <br>
+<input type="checkbox"  name="Lbook" value="450">Java programming rs.450 <br>
+<input type="submit" value="Send">
+
+</form>
+</body>
+</html>
